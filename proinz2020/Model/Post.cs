@@ -13,5 +13,6 @@ namespace proinz2020.Model
         public DateTime CreatedAt { get; set; }
         public DateTime LastEditionAt { get; set; }
         public List<Photo> Photos { get; set; }
+        public Group Group { get; set; }
     }
 }

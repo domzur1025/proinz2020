@@ -15,7 +15,6 @@ namespace proinz2020.Model
         public String Email { get; set; }
         public DateTime CreatedAt { get; set; }
         public CountryCode CountryCode { get; set; }
-        public Photo ProfilePhoto { get; set; }
         public Status.AccountStatus Status { get; set; }
         public AccountType.Role Role { get; set; }
     }

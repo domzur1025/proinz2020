@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace proinz2020.Model
 {
-    public class Photo
+    public class GroupMember
     {
         public int Id { get; set; }
-        public String FileName { get; set; }
         public User User { get; set; }
-        public DateTime AddAt { get; set; }
-        public bool IsProfilePhoto { get; set; }
+        public Group Group { get; set; }
+        public GroupMemberType.Type MemberType { get; set; }
+        public DateTime JoinAt { get; set; }
     }
 }
