@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using proinz2020.Model;
+using proinz2020.Services;
+using proinz2020.ServicesImpl;
 
 namespace proinz2020.Controllers
 {
@@ -14,10 +18,12 @@ namespace proinz2020.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly PSQLDbContext _context;
+        private readonly ICommentsService commentsService;
 
         public CommentsController(PSQLDbContext context)
         {
             _context = context;
+            this.commentsService = new CommentsService(_context);
         }
 
         // GET: api/Comments
@@ -39,6 +45,18 @@ namespace proinz2020.Controllers
             }
 
             return comment;
+        }
+
+        [HttpGet("{post}")]
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentToPost(Post id)
+        {
+            var comment = commentsService.findCommentsByPostId(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return comment.ToList();
         }
 
         // PUT: api/Comments/5
@@ -77,14 +95,12 @@ namespace proinz2020.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        public HttpResponseMessage PostComment(Comment comment)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetComment", new { id = comment.Id }, comment);
+            commentsService.AddComment(comment);
+            System.Console.WriteLine(comment.ToString());
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
-
         // DELETE: api/Comments/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Comment>> DeleteComment(int id)
