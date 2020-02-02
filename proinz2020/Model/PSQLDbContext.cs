@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using proinz2020.Model;
 
 namespace proinz2020.Model
 {
@@ -20,5 +21,6 @@ namespace proinz2020.Model
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<proinz2020.Model.GroupMember> GroupMember { get; set; }
     }
 }
